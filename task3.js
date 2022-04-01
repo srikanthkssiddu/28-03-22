@@ -1,17 +1,26 @@
-function range(x, y, n){
-    if (n>=x && n<=y){
-        return console.log("The number is in the given range.");
+function Rearrange(arr){
+    
+    len = arr.length-1;
+    bool = true;
+    for(i=0; i<len; i++){
+        
+        max =Math.max (arr[i], arr[i+1]);
+        min =Math.min (arr[i], arr[i+1]);
+
+        if (bool==true){
+            arr[i] = min;
+            arr[i+1]=max;
+            bool = false;
+        }
+        else{
+            arr[i]=max;
+            arr[i+1]=min;
+            bool = true;
+        }
     }
-    else{
-        return console.log("The number is not in the given range.");
-    }
+    return arr;
 }
+// console.log(arr);
+let arr = [1,2,3,4,5,6,7]
 
-let x = 30;
-let y = 80;
-let n = 50;
-
-console.log(range(x,y,n));
-console.log(range(40,60,90));
-console.log(range(100,150,149));
-console.log(range(10,18,28));
+console.log(Rearrange(arr));

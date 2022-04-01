@@ -1,54 +1,48 @@
-function maxSumPath(a1, a2, len1, len2){
-    let result = 0,
-    sum1 = 0,
-    sum2 = 0;
-    let i = 0,
-    j = 0;
-    // path = [];
+let arr = [ 8, 58, 71, 18, 31, 32, 63, 92, 43, 3, 91, 93, 25, 80, 28 ];
+let n = arr.length;
 
-    while (i<len1 && j<len2){
-        if(a1[i]<a2[j]){
-            sum1 += a1[i];
-            i+=1;
-            // path.push(a1[i]);
-        }
-        else if(a1[i]>a2[j]){
-            sum2+=a2[j];
-            j+=1;
-            // path.push(a2[j]);
-        }
-        else{
-            result += Math.max(sum1, sum2) + a1[i];
-            sum1 = 0;
-            sum2 = 0;
-            // path = [];
-            i+=1;
-            j+=1;
-        }
+class Node{
+    constructor(d){
+        this.data = d;
+        this.left = this.right = null;
     }
-    while(i<len1){
-        sum1+=a1[i];
-        i+=1;
-        // path.push(a1[i]);
-    }
-    
-    while(j<len2){
-        sum2+=a2[j];
-        j+=1;
-        // path.push(a2[j]);;
-    }
-
-    result += Math.max(sum1,sum2);
-    
-    // sorted_path = path.sort();
-    // console.log(path);
-
-    return result;
 }
 
-let a1 = [3, 6, 7, 8, 10,12, 15, 18, 100];
-let a2 = [1, 2, 3, 5, 7, 9, 10, 11, 15, 16, 18, 25, 50];
-let len1 = a1.length;
-let len2 = a2.length;
+let root = null;
+let succ = null;
 
-console.log(maxSumPath(a1, a2, len1, len2));
+function insert(node,data){
+    if (node == null){
+        node = new Node(data);
+    }
+
+    if (data<node.data){
+        succ = node;
+        node.left = insert(node.left, data);
+    }
+
+    else if(data>node.data){
+        node.right = insert(node.right, data);
+    }
+
+    return node;
+}
+
+function replace(arr,n){
+    for(let i = n-1; i>=0; i--){
+        succ = null;
+
+        root = insert(root, arr[i])
+        if (succ!=null){
+            arr[i] = succ.data;
+        }
+        else{
+            arr[i] = -1;
+        }
+    }
+}
+
+replace(arr,n);
+for(let i=0; i<n; i++){
+    console.log(arr[i] + " ")
+}
